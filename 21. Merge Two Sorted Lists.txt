@@ -1,0 +1,85 @@
+/*
+@ Bittu Paul (www.github.com/bittupaul)
+Date: June 1, 2020
+*/
+
+Question: 
+Merge two sorted linked lists and return it as a new sorted list. The new list should be made by splicing together the nodes of the first two lists.
+
+Example:
+Input: 1->2->4, 1->3->4
+Output: 1->1->2->3->4->4
+
+Solution:
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+        
+        if(l1==null)
+            return l2;
+        if(l2==null)
+            return l1;
+        
+        ListNode head;
+        if(l1.val<=l2.val){
+            head = l1;
+            l1 = l1.next;    
+        }
+        else{
+            head = l2;
+            l2 = l2.next;    
+        }
+        
+        
+        ListNode temp = head;
+        temp.next = null;
+      
+        while(l1!=null && l2!=null){
+            
+            if(l1.val<=l2.val){
+                temp.next = l1;
+                l1 = l1.next;
+                temp = temp.next;
+                temp.next = null;
+            }
+            else{
+                temp.next = l2;
+                l2 = l2.next;
+                temp = temp.next;
+                temp.next = null;
+            }
+        }
+        
+        if(l1==null)
+            temp.next = l2;
+        if(l2==null)
+            temp.next = l1;
+  
+        return head;
+    }
+}
+/*
+We are presented with reference to two linear singly linked list which are sorted in ascending order as per the node values.
+We need to combine them by splicing in such a way that the final list conserves its order.
+
+base condition: if one of the list is empty, return the other list
+approach:
+
+1. start traversing both the list and merge them until one of them exhausts.
+2. return the head reference of the newly created list
+
+Time Complexity: linear O(n) where n = max(a,b), a & b = number of nodes in both list respectively
+
+Space Complexity: O(1)
+
+*/

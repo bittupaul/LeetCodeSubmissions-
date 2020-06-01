@@ -1,0 +1,79 @@
+/*
+@ Bittu Paul (www.github.com/bittupaul)
+Date: June 1, 2020
+*/
+
+Question: 
+Determine whether an integer is a palindrome. An integer is a palindrome when it reads the same backward as forward.
+
+Example 1:
+Input: 121
+Output: true
+
+Example 2:
+Input: -121
+Output: false
+Explanation: From left to right, it reads -121. From right to left, it becomes 121-. Therefore it is not a palindrome.
+
+Example 3:
+Input: 10
+Output: false
+Explanation: Reads 01 from right to left. Therefore it is not a palindrome.
+
+Follow up: Coud you solve it without converting the integer to a string?
+
+
+Solution:
+
+class Solution {
+    public boolean isPalindrome(int x) {
+        
+        //base condition
+        if(x<0)
+            return false;
+        
+        /*
+        approach 1:
+        
+        StringBuffer input = new StringBuffer(x+"");
+        StringBuffer reversedInput = new StringBuffer(input.reverse());
+        if(input.reverse().toString().equals(reversedInput.toString()))
+            return true;
+        return false;        
+        */
+        
+        //approach 2:
+        
+        int originalNumber = x, reversedNumber = 0;
+        while(x>9){
+            reversedNumber = (reversedNumber*10) + (x%10);
+            x = x/10;
+        }
+        reversedNumber = (reversedNumber*10)+x;
+        if(originalNumber-reversedNumber==0)
+            return true;
+        return false;
+    }
+}
+
+
+/*
+given a signed number, we need to check if it's a palindrome or not.
+now all negative numbers are not palindrome.
+positive numbers are palindrome if their negative reversal + original number results 0
+
+
+approach1:
+base: if number negative, return false
+convert the number in string, reverse the string and check for equality.
+if equal return true, else return false.
+time complexity: linear O(n)
+space complexityu: linear O(n)
+
+approach2:
+base: if number negative, return false
+reverse number arithmetically, add negation of reversed number to original number.
+if sum is 0 return true else return false.
+time complexity: linear O(n)
+space complexity: constant O(1)
+*/

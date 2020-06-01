@@ -1,0 +1,87 @@
+/*
+@ Bittu Paul (www.github.com/bittupaul)
+Date: June 1, 2020
+*/
+
+Question: 
+Given an array nums and a value val, remove all instances of that value in-place and return the new length.
+Do not allocate extra space for another array, you must do this by modifying the input array in-place with O(1) extra memory.
+The order of elements can be changed. It doesn't matter what you leave beyond the new length.
+
+Example 1:
+Given nums = [3,2,2,3], val = 3,
+Your function should return length = 2, with the first two elements of nums being 2.
+It doesn't matter what you leave beyond the returned length.
+
+Example 2:
+Given nums = [0,1,2,2,3,0,4,2], val = 2,
+Your function should return length = 5, with the first five elements of nums containing 0, 1, 3, 0, and 4.
+Note that the order of those five elements can be arbitrary.
+It doesn't matter what values are set beyond the returned length.
+
+Clarification:
+Confused why the returned value is an integer but your answer is an array?
+Note that the input array is passed in by reference, which means modification to the input array will be known to the caller as well.
+Internally you can think of this:
+
+// nums is passed in by reference. (i.e., without making a copy)
+int len = removeElement(nums, val);
+
+// any modification to nums in your function would be known by the caller.
+// using the length returned by your function, it prints the first len elements.
+for (int i = 0; i < len; i++) {
+    print(nums[i]);
+}
+
+Solution:
+
+class Solution {
+    public int removeElement(int[] nums, int target) {
+        
+        int i=0, j=0, targetCount=0;
+        while(i<nums.length && j<nums.length){
+            
+            if(nums[i]==target)
+                targetCount++;
+            
+            if(nums[i]==nums[j] && nums[i]!=target){
+                i++;
+                j++;
+            }
+            else if(nums[i]==nums[j] && nums[i]==target){
+                i++;
+            }
+            else if(nums[i]!=nums[j] && (nums[j]==target || nums[j]==-1)){
+                nums[j]=nums[i];
+                if(nums[i]!=target)
+                    j++;
+                nums[i] = -1;
+                i++;
+                
+            }
+        }
+        return nums.length-targetCount;
+    }
+}
+
+/*
+we are given an integer array and a target value.
+we need to remove all instances of the target value from the array inplace and shift forward elements backward to fill the removal hole.
+at last, we need to return the length of the new array.
+
+approach:
+
+1. use two pointers and iterate through the array. 
+
+    if both pointers points to same value and if the value is not the target value,     increment both the pointers
+
+    if both pointers points to same value and if the value is the target value,         increment second pointer only
+
+    if both pointers points to different value and the first pointer points to           target value or -1 put the value pointed by second pointer in place of first         pointer. if value pointed by second pointer is the target value, do not             increment first pointer else increment first pointer. Rewrite value pointed by       second pointer as -1 and increment the second pointer.
+
+2. keep track of number of occurrences of target value
+
+3. return the difference of array length and count of number of occurrences of target value
+
+Note: the first pointer points to the place of deletion and second pointer iterates through the array.
+*/
