@@ -1,0 +1,83 @@
+/*
+@ Bittu Paul (www.github.com/bittupaul)
+Date: June 1, 2020
+*/
+
+Question: 
+Given two binary strings, return their sum (also a binary string).
+The input strings are both non-empty and contains only characters 1 or 0.
+
+Example 1:
+Input: a = "11", b = "1"
+Output: "100"
+
+Example 2:
+Input: a = "1010", b = "1011"
+Output: "10101"
+ 
+Constraints:
+Each string consists only of '0' or '1' characters.
+1 <= a.length, b.length <= 10^4
+Each string is either "0" or doesn't contain any leading zero.
+
+
+Solution:
+
+class Solution {
+    public String addBinary(String a, String b) {
+        
+        StringBuffer sum = new StringBuffer("");
+        int i=a.length()-1, j=b.length()-1;
+        int carry=0, temp=0;
+        while(i>=0 && j>=0){
+            temp = Integer.parseInt(a.charAt(i)+"") + Integer.parseInt(b.charAt(j)+"") + carry;
+            if(temp==0 || temp==1){
+                sum.append(temp+"");
+                carry = 0;
+            }
+            else if(temp==2){
+                sum.append("0");
+                carry = 1;
+            }
+            else sum.append("1");
+            i--;
+            j--;
+        }
+        while(i>=0){
+            temp = carry + Integer.parseInt(a.charAt(i)+""); 
+            if(temp==0 || temp==1){
+                sum.append(temp+"");
+                carry = 0;
+            }
+            else if(temp==2){
+                sum.append("0");
+                carry = 1;
+            }
+            i--;
+        }
+        while(j>=0){
+            temp = carry + Integer.parseInt(b.charAt(j)+""); 
+            if(temp==0 || temp==1){
+                sum.append(temp+"");
+                carry = 0;
+            }
+            else if(temp==2){
+                sum.append("0");
+                carry = 1;
+            }
+            j--;
+        }
+        if(carry==1)
+            sum.append("1");
+        return sum.reverse().toString();
+    }
+}
+/*
+task: to add two valid non empty binary strings
+
+approach:
+sum linearly from the end using binary addition rules.
+
+Time Complexity: linear O(m+n) where m, n are respective lengths of the input binary strings
+Space Complexity: linear O(m+n) where m, n are respective lengths of the input binary strings
+*/
