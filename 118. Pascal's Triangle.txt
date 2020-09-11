@@ -1,0 +1,73 @@
+/*
+@ Bittu Paul (www.github.com/bittupaul)
+Date: June 4, 2020
+*/
+
+Question: 
+Given a non-negative integer numRows, generate the first numRows of Pascal's triangle.
+In Pascal's triangle, each number is the sum of the two numbers directly above it.
+
+Example:
+Input: 5
+Output:
+[
+     [1],
+    [1,1],
+   [1,2,1],
+  [1,3,3,1],
+ [1,4,6,4,1]
+]
+
+Solution:
+
+class Solution {
+    public List<List<Integer>> generate(int numRows) {
+        
+        List<List<Integer>> pascalLevels = new ArrayList<>();
+        
+        if(numRows==0)
+            return pascalLevels;
+        
+        if(numRows==1){
+            List<Integer> level = new ArrayList<>();
+            level.add(1);
+            pascalLevels.add(level);
+            return pascalLevels;
+        }
+        
+        List<Integer> level = new ArrayList<>();
+        level.add(1);
+        pascalLevels.add(level);
+        level = new ArrayList<>();
+        level.add(1);
+        level.add(1);
+        pascalLevels.add(level);
+            
+        
+        if(numRows==2)
+            return pascalLevels;
+        
+        for(int i=2; i<numRows; i++){
+            level = new ArrayList<>();
+            level.add(1);
+            for(int j=0;j<pascalLevels.get(i-1).size()-1;j++){
+                level.add(pascalLevels.get(i-1).get(j)+pascalLevels.get(i-1).get(j+1));
+            }
+            level.add(1);
+            pascalLevels.add(level);
+        }
+        
+        return pascalLevels;
+        
+    }
+}
+
+/*
+task: to construct n levels of pascal triangle
+
+approach:
+construct level by level using basic mathematics
+
+Time Complexity: O(n^2)
+Space Complexity: O(n^2)
+*/
