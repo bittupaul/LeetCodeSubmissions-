@@ -1,0 +1,86 @@
+/*
+@ Bittu Paul (www.github.com/bittupaul)
+Date: Aug 17, 2020
+*/
+
+Question: 
+
+You are playing the following Bulls and Cows game with your friend: You write down a number and ask your friend to guess what the number is. 
+Each time your friend makes a guess, you provide a hint that indicates how many digits in said guess match your secret number exactly in both digit and position (called "bulls") and 
+how many digits match the secret number but locate in the wrong position (called "cows"). Your friend will use successive guesses and hints to eventually derive the secret number.
+Write a function to return a hint according to the secret number and friend's guess, use A to indicate the bulls and B to indicate the cows. 
+Please note that both secret number and friend's guess may contain duplicate digits.
+
+Example 1:
+Input: secret = "1807", guess = "7810"
+Output: "1A3B"
+Explanation: 1 bull and 3 cows. The bull is 8, the cows are 0, 1 and 7.
+
+Example 2:
+Input: secret = "1123", guess = "0111"
+Output: "1A1B"
+Explanation: The 1st 1 in friend's guess is a bull, the 2nd or 3rd 1 is a cow.
+
+Note: You may assume that the secret number and your friend's guess only contain digits, and their lengths are always equal.
+
+Solution:
+
+class Solution {
+    public String getHint(String secret, String guess) {
+        
+        String result = "";
+        LinkedHashMap<Integer, Integer> numFreq = new LinkedHashMap<>();
+        int bullCount=0, cowCount=0;
+        
+        for(int i=0;i<secret.length();i++){
+            if(Integer.parseInt(secret.charAt(i)+"")==Integer.parseInt(guess.charAt(i)+"")){
+                bullCount++;
+            }
+            else{
+                if(!numFreq.containsKey(Integer.parseInt(secret.charAt(i)+""))){
+                    numFreq.put(Integer.parseInt(secret.charAt(i)+""), 1);
+                }
+                else{
+                    numFreq.replace(Integer.parseInt(secret.charAt(i)+""), numFreq.get(Integer.parseInt(secret.charAt(i)+""))+1);
+                }
+            } 
+        }
+        
+        for(int i=0;i<guess.length();i++){
+            if(Integer.parseInt(secret.charAt(i)+"")==Integer.parseInt(guess.charAt(i)+"")){
+                continue;
+            }
+            else{
+                if(numFreq.containsKey(Integer.parseInt(guess.charAt(i)+""))){
+                    cowCount++;
+                    numFreq.replace(Integer.parseInt(guess.charAt(i)+""), numFreq.get(Integer.parseInt(guess.charAt(i)+""))-1);
+                    if(numFreq.get(Integer.parseInt(guess.charAt(i)+""))==0)
+                        numFreq.remove(Integer.parseInt(guess.charAt(i)+""));
+                }
+                else{
+                    continue;
+                }
+            } 
+        }
+        
+        return bullCount+"A"+cowCount+"B";
+    }
+}
+
+/*
+Task: Given two strings, we need to return a string consisting count of matches w/ pos and char and matches w/ only char.
+
+approach:
+Take both the string and check for same pos and same char equality.
+If found, increment bull count by 1.
+If not, add the char of secret string in a hasmap if not already there or update frequency.
+Take both the string and check for same pos and same char equality.
+If found, do nothing.
+If not, look for the char in guess string in the hasmap. 
+If found, increment cow count and decrement frequency in map. If reaches zero, delete.
+If not found, continue;
+
+
+Time Complexity: Linear O(n)
+Space Complexity: Linear O(n)
+*/

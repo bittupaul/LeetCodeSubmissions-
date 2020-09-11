@@ -1,0 +1,80 @@
+/*
+@ Bittu Paul (www.github.com/bittupaul)
+Date: Aug 18, 2020
+*/
+
+Question: 
+Given a linked list, determine if it has a cycle in it.
+To represent a cycle in the given linked list, we use an integer pos which represents the position (0-indexed) in the linked list where tail connects to. If pos is -1, then there is no cycle in the linked list.
+
+Example 1:
+Input: head = [3,2,0,-4], pos = 1
+Output: true
+Explanation: There is a cycle in the linked list, where tail connects to the second node.
+
+Example 2:
+Input: head = [1,2], pos = 0
+Output: true
+Explanation: There is a cycle in the linked list, where tail connects to the first node.
+
+Example 3:
+Input: head = [1], pos = -1
+Output: false
+Explanation: There is no cycle in the linked list.
+
+Follow up:
+Can you solve it using O(1) (i.e. constant) memory?
+
+Solution:
+
+/**
+ * Definition for singly-linked list.
+ * class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) {
+ *         val = x;
+ *         next = null;
+ *     }
+ * }
+ */
+public class Solution {
+    public boolean hasCycle(ListNode head) {
+        
+        /*Approach 2*/
+        ListNode slow = head, fast = head;
+        while(fast!=null){
+            slow = slow.next;
+            if(slow == null)
+                return false;
+            if(fast.next!=null && fast.next.next!=null)
+                fast =fast.next.next;
+            else fast = null;
+            if(slow==fast)
+                return true;
+        }
+        return false;
+        
+    }
+}
+
+/*
+Task: To check if a linked list forms a closed loop / cycle.
+
+approach 1:
+Traverse through the linked list and store the values of each node in a hashset, if not already present.
+If present, return true for successfully detecting a cycle.
+If list gets exhausted without a collision in hashset, return false.
+
+Time Complexity: Linear O(n), n = total number of linked list nodes
+Space Complexity: Linear O(n), n = total number of linked list nodes
+Bad result case: If node values are repeated.
+
+approach 2:
+Use two iterators. One which increments by 1 and other which increments by 2.
+If the second iterator exhausts iterating the list, return false indicating no cycle.
+If both the iterators iterates to same node return true indicating cycle found.
+
+Time Complexity: Linear O(n)
+Space Complexity: Constant O(1)
+*/

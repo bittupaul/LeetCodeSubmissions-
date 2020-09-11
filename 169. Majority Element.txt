@@ -1,0 +1,45 @@
+/*
+@ Bittu Paul (www.github.com/bittupaul)
+Date: June 6, 2020
+*/
+
+Question: 
+Given an array of size n, find the majority element. The majority element is the element that appears more than ⌊ n/2 ⌋ times.
+You may assume that the array is non-empty and the majority element always exist in the array.
+
+Example 1:
+Input: [3,2,3]
+Output: 3
+
+Example 2:
+Input: [2,2,1,1,1,2,2]
+Output: 2
+
+Solution:
+
+class Solution {
+    public int majorityElement(int[] nums) {
+        LinkedHashMap<Integer, Integer> freq = new LinkedHashMap<>();
+        for(int i : nums){
+            if(!freq.containsKey(i)){
+                freq.put((Integer)i, (Integer)1);
+            }
+            else freq.replace(i, (Integer)freq.get(i)+1);
+        }
+        for(Map.Entry<Integer, Integer> entry : freq.entrySet()){
+            if(entry.getValue()>(int)Math.floor(nums.length/2))
+                return entry.getKey();
+        }
+        return 0;
+    }
+}
+/*
+task: to find the element in an array which occurs for more than floor(n/2) times in the array, where n = total elements in array.
+
+approach:
+use a hashmap and store all the distinct elements with their occurrences.
+iterate through the hashmap and return the element with majority occurrences.
+
+Time Complexity: linear O(n)
+Space Complexity: linear O(n)
+*/

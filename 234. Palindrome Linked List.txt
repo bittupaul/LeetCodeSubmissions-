@@ -1,0 +1,101 @@
+/*
+@ Bittu Paul (www.github.com/bittupaul)
+Date: Aug 18, 2020
+*/
+
+Question: 
+Given a singly linked list, determine if it is a palindrome.
+
+Example 1:
+Input: 1->2
+Output: false
+
+Example 2:
+Input: 1->2->2->1
+Output: true
+
+Follow up:
+Could you do it in O(n) time and O(1) space?
+
+Solution:
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    
+    public ListNode reverse(ListNode head){
+        if(head==null)
+            return null;
+        
+        ListNode prev = null, current = head, next = head.next;
+        
+        while(next!=null){
+            current.next = prev;
+            prev = current;
+            current = next;
+            next = next.next;
+        }
+        current.next = prev;
+        prev = current;
+        return prev;
+    }
+    public boolean isPalindrome(ListNode head) {
+        
+        if(head == null)
+            return true;
+        
+        ListNode slow = head;
+        ListNode fast = head;
+
+        while(true){
+            if(fast.next==null)               
+                break;
+            else if(fast.next.next==null)
+                break;
+            else fast = fast.next.next;
+            slow = slow.next;
+        }
+        
+        ListNode mid = slow.next;
+        slow.next = null;
+        ListNode head2 = reverse(mid);
+        while(head2!=null){
+            if(head.val!=head2.val)
+                return false;
+            head = head.next;
+            head2 = head2.next;
+        }
+        
+        return true;
+    }
+}
+
+
+ 
+/*
+Task: Given a linked list we have to determine if it's a palindrome or not.
+
+approach 1:
+Iterate through the linked list, form a string buffer by storing the value of the linked list and check if it's a palindrome or not.
+Time Complexity: Linear O(n)
+Space Complexity: Linear O(1)
+Bad result case: if linked list values are multi digit.
+
+approach 2:
+Iterate through the linked list using slow and fast iterators. 
+Find the mid point and reverse the second half.
+Match linearly. 
+
+Time Complexity: Linear O(n), n = total linked list nodes
+Space Complexity: Constant O(1) 
+
+
+*/

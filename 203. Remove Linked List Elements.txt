@@ -1,0 +1,58 @@
+/*
+@ Bittu Paul (www.github.com/bittupaul)
+Date: Aug 18, 2020
+*/
+
+Question: 
+Remove all elements from a linked list of integers that have value val.
+
+Example:
+Input:  1->2->6->3->4->5->6, val = 6
+Output: 1->2->3->4->5
+
+Solution:
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode removeElements(ListNode head, int val) {
+        if(head == null)
+            return head;
+        
+        while(head!=null && head.val==val){
+            head = head.next;
+        }
+        if(head == null)
+            return head;
+        ListNode follow = head;
+        ListNode ahead = head.next;
+        while(ahead!=null){
+            if(ahead.val == val){
+                follow.next = ahead.next;
+            }
+            else{
+                follow = ahead;
+            }
+            ahead = ahead.next;
+        }
+        return head;
+    }
+}
+/*
+Task: To remove all the linked list nodes which have values equal to target value. 
+
+approach: 
+Linearly iterate over the list and make deletions as required.
+
+Time Complexity: Linear O(n) where n = total number of linked list nodes
+Space Complexity: Constant O(1)
+
+*/
