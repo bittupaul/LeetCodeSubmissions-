@@ -69,7 +69,7 @@ class Solution {
     }
 }
 /*
-Approach: Iterative Postorder DFS
+Approach: Iterative (Root->Right->Left) DFS
 Data Structure: Stack, HashSet
 Time Complexity: Linear O(n) where n = total number of nodes in binary tree
 Space Complexity: Linear O(n) where n = total number of nodes in binary tree
